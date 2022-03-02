@@ -29,5 +29,16 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
+	FindTeam.associate = (models) => {
+		FindTeam.belongsTo(models.User, {
+			foreignKey: {
+				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+	};
+
 	return FindTeam;
 };

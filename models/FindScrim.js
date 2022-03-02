@@ -44,5 +44,16 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
+	FindScrim.associate = (models) => {
+		FindScrim.belongsTo(models.User, {
+			foreignKey: {
+				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+	};
+
 	return FindScrim;
 };

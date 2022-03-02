@@ -30,5 +30,17 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
+	Team.associate = (models) => {
+		Team.belongsTo(models.User, {
+			as: "TeamOwner",
+			foreignKey: {
+				name: "teamOwnerId",
+				allowNull: true,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+	};
+
 	return Team;
 };

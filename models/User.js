@@ -33,6 +33,10 @@ module.exports = (sequelize, DataTypes) => {
 				type: DataTypes.DATEONLY,
 				allowNull: false,
 			},
+			gender: {
+				type: DataTypes.STRING,
+				allowNull: false,
+			},
 		},
 		{
 			underscored: true,
@@ -40,6 +44,74 @@ module.exports = (sequelize, DataTypes) => {
 			paranoid: true,
 		}
 	);
+
+	User.associate = (models) => {
+		User.hasOne(models.Team, {
+			as: "TeamOwner",
+			foreignKey: {
+				name: "teamOwnerId",
+				allowNull: true,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasOne(models.GameAccount, {
+			foreignKey: {
+				name: "GameAccountId",
+				allowNull: true,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasMany(models.Friend, {
+			as: "RequestTo",
+			foreignKey: {
+				name: "requestToId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasMany(models.Friend, {
+			as: "RequestFrom",
+			foreignKey: {
+				name: "requestFromId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasOne(models.FindTeam, {
+			foreignKey: {
+				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasMany(models.FindPlayer, {
+			foreignKey: {
+				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasMany(models.FindScrim, {
+			foreignKey: {
+				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+	};
 
 	return User;
 };

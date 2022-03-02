@@ -31,5 +31,16 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
+	GameAccount.associate = (models) => {
+		GameAccount.belongsTo(models.User, {
+			foreignKey: {
+				name: "GameAccountId",
+				allowNull: true,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+	};
+
 	return GameAccount;
 };

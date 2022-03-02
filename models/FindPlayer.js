@@ -28,5 +28,16 @@ module.exports = (sequelize, DataTypes) => {
 		}
 	);
 
+	FindPlayer.associate = (models) => {
+		FindPlayer.belongsTo(models.User, {
+			foreignKey: {
+				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+	};
+
 	return FindPlayer;
 };
