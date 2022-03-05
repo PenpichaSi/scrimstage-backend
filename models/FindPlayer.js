@@ -37,6 +37,15 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: "RESTRICT",
 			onUpdate: "RESTRICT",
 		});
+
+		FindPlayer.belongsTo(models.Team, {
+			foreignKey: {
+				name: "teamId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
 	};
 
 	return FindPlayer;

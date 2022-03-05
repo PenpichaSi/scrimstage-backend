@@ -3,7 +3,6 @@ const app = express();
 const cors = require("cors");
 
 const userRoute = require("./routes/userRoute");
-const authRoute = require("./routes/authRoute");
 const friendRoute = require("./routes/friendRoute");
 const findScrimRoute = require("./routes/findScrimRoute");
 const findPlayerRoute = require("./routes/findPlayerRoute");
@@ -15,7 +14,6 @@ app.use(express.urlencoded({ extends: true }));
 app.use("static", express.static("public/images"));
 
 app.use("/users", userRoute);
-app.use("/auth", authRoute);
 app.use("/friends", friendRoute);
 app.use("/find-scrim", findScrimRoute);
 app.use("find-player", findPlayerRoute);

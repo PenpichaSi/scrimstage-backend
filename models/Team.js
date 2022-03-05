@@ -30,6 +30,34 @@ module.exports = (sequelize, DataTypes) => {
 	);
 
 	Team.associate = (models) => {
+		Team.hasMany(models.FindPlayer, {
+			foreignKey: {
+				name: "teamId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		Team.hasMany(models.FindScrim, {
+			as: "TeamHome",
+			foreignKey: {
+				name: "teamHomeId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+		Team.hasMany(models.FindScrim, {
+			as: "TeamAway",
+			foreignKey: {
+				name: "teamHomeId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
 		Team.belongsTo(models.User, {
 			as: "TeamOwner",
 			foreignKey: {

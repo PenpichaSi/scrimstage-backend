@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = {
-	async up(queryInterface, Sequelize) {
+	up: async (queryInterface, Sequelize) => {
 		await queryInterface.createTable("game_accounts", {
 			id: {
 				type: Sequelize.INTEGER,
@@ -21,6 +21,26 @@ module.exports = {
 				type: Sequelize.STRING,
 				allowNull: false,
 			},
+			rank: {
+				type: Sequelize.STRING,
+				allowNull: false,
+			},
+			region: {
+				type: Sequelize.STRING,
+				defaultValue: "ap",
+			},
+			win_rate: {
+				type: Sequelize.FLOAT,
+			},
+			avg_combat_score: {
+				type: Sequelize.FLOAT,
+			},
+			avg_kda: {
+				type: Sequelize.FLOAT,
+			},
+			avg_econ_score: {
+				type: Sequelize.FLOAT,
+			},
 			created_at: {
 				type: Sequelize.DATE,
 				allowNull: false,
@@ -31,7 +51,6 @@ module.exports = {
 			},
 			deleted_at: {
 				type: Sequelize.DATE,
-				allowNull: false,
 			},
 			user_id: {
 				type: Sequelize.INTEGER,
@@ -46,7 +65,7 @@ module.exports = {
 		});
 	},
 
-	async down(queryInterface, Sequelize) {
+	down: async (queryInterface, Sequelize) => {
 		await queryInterface.dropTable("game_accounts");
 	},
 };

@@ -10,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
 				},
 			},
 			rank: {
-				type: DataType.STRING,
+				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
 					notEmpty: true,

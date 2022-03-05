@@ -53,6 +53,26 @@ module.exports = (sequelize, DataTypes) => {
 			onDelete: "RESTRICT",
 			onUpdate: "RESTRICT",
 		});
+
+		FindScrim.belongsTo(models.Team, {
+			as: "TeamHome",
+			foreignKey: {
+				name: "teamHomeId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		FindScrim.belongsTo(models.Team, {
+			as: "TeamAway",
+			foreignKey: {
+				name: "teamHomeId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
 	};
 
 	return FindScrim;
