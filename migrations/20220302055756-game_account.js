@@ -49,9 +49,7 @@ module.exports = {
 				type: Sequelize.DATE,
 				allowNull: false,
 			},
-			deleted_at: {
-				type: Sequelize.DATE,
-			},
+
 			user_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
