@@ -9,15 +9,16 @@ module.exports = {
 				primaryKey: true,
 				autoIncrement: true,
 			},
-			created_at: {
-				type: Sequelize.DATE,
+			user_id: {
+				type: Sequelize.INTEGER,
 				allowNull: false,
+				references: {
+					model: {
+						tableName: "users",
+					},
+					key: "id",
+				},
 			},
-			updated_at: {
-				type: Sequelize.DATE,
-				allowNull: false,
-			},
-
 			position: {
 				type: Sequelize.STRING,
 				allowNull: false,
@@ -31,15 +32,13 @@ module.exports = {
 				defaultValue: false,
 				allowNull: false,
 			},
-			user_id: {
-				type: Sequelize.INTEGER,
+			created_at: {
+				type: Sequelize.DATE,
 				allowNull: false,
-				references: {
-					model: {
-						tableName: "users",
-					},
-					key: "id",
-				},
+			},
+			updated_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
 			},
 		});
 	},

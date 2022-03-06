@@ -9,6 +9,16 @@ module.exports = {
 				primaryKey: true,
 				autoIncrement: true,
 			},
+			user_id: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: {
+						tableName: "users",
+					},
+					key: "id",
+				},
+			},
 			username: {
 				type: Sequelize.STRING,
 				allowNull: false,
@@ -48,17 +58,6 @@ module.exports = {
 			updated_at: {
 				type: Sequelize.DATE,
 				allowNull: false,
-			},
-
-			user_id: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-				references: {
-					model: {
-						tableName: "users",
-					},
-					key: "id",
-				},
 			},
 		});
 	},
