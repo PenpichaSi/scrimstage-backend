@@ -5,7 +5,6 @@ module.exports = (sequelize, DataTypes) => {
 			title: {
 				type: DataTypes.STRING,
 				allowNull: false,
-				unique: true,
 				validate: {
 					notEmpty: true,
 				},
@@ -34,6 +33,15 @@ module.exports = (sequelize, DataTypes) => {
 			foreignKey: {
 				name: "teamId",
 				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		Team.hasMany(models.User, {
+			foreignKey: {
+				name: "teamId",
+				allowNull: true,
 			},
 			onDelete: "RESTRICT",
 			onUpdate: "RESTRICT",

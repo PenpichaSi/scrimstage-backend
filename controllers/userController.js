@@ -1,9 +1,6 @@
 const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
-const util = require("util");
 const { User } = require("../models");
-
-// const uploadPromise = util.promisify(cloudinary.uploader.upload);
 
 exports.getMe = (req, res, next) => {
 	const { id, username, img_url } = req.body;
@@ -12,7 +9,6 @@ exports.getMe = (req, res, next) => {
 };
 
 exports.updateUserProfileImg = (req, res, next) => {
-	console.log(req.user.id);
 	cloudinary.uploader.upload(req.file.path, async (err, result) => {
 		if (err) return next(err);
 		const user = await User.findOne({ where: { id: req.user.id } });

@@ -2,52 +2,54 @@
 
 module.exports = {
 	up: async (queryInterface, Sequelize) => {
-		await queryInterface.createTable("teams", {
+		await queryInterface.createTable("TeamRequests", {
 			id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
 				primaryKey: true,
 				autoIncrement: true,
 			},
-			title: {
-				type: Sequelize.STRING,
+			status: {
+				type: Sequelize.BOOLEAN,
 				allowNull: false,
-				unique: true,
+				defaultValue: false,
 			},
-			tag: {
-				type: Sequelize.STRING,
-				allowNull: false,
-			},
-			team_profile_img: {
-				type: Sequelize.STRING,
-				allowNull: true,
-			},
-			created_at: {
-				allowNull: false,
-				type: Sequelize.DATE,
-			},
-			updated_at: {
-				allowNull: false,
-				type: Sequelize.DATE,
-			},
-			deleted_at: {
-				type: Sequelize.DATE,
-				allowNull: true,
-			},
-			team_owner_id: {
+			request_from_id: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
-				references: {
+				reference: {
 					model: {
 						tableName: "users",
 					},
 					key: "id",
 				},
 			},
+			request_to_id: {
+				type: Sequelize.INTEGER,
+				allowNull: true,
+				reference: {
+					model: {
+						tableName: "users",
+					},
+					key: "id",
+				},
+			},
+			created_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
+			},
+			updated_at: {
+				type: Sequelize.DATE,
+				allowNull: false,
+			},
+			deleted_at: {
+				type: Sequelize.DATE,
+				allowNull: true,
+			},
 		});
 	},
 
 	down: async (queryInterface, Sequelize) => {
-		await queryInterface.dropTable("teams");
+		return await queryInterface.dropTable("TeamRequests");
 	},
 };

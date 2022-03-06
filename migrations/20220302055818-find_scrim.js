@@ -52,7 +52,7 @@ module.exports = {
 				allowNull: false,
 				references: {
 					model: {
-						tableName: "team",
+						tableName: "teams",
 					},
 					key: "id",
 				},

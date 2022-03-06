@@ -56,6 +56,15 @@ module.exports = (sequelize, DataTypes) => {
 			onUpdate: "RESTRICT",
 		});
 
+		User.belongsTo(models.Team, {
+			foreignKey: {
+				name: "teamId",
+				allowNull: true,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
 		User.hasOne(models.GameAccount, {
 			foreignKey: {
 				name: "GameAccountId",
@@ -106,6 +115,42 @@ module.exports = (sequelize, DataTypes) => {
 		User.hasMany(models.FindScrim, {
 			foreignKey: {
 				name: "userId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasMany(models.TeamRequest, {
+			as: "TeamRequestFrom",
+			foreignKey: {
+				name: "requestedFromId",
+				allowNull: false,
+			},
+		});
+
+		User.hasMany(models.TeamRequest, {
+			as: "TeamRequestTo",
+			foreignKey: {
+				name: "requestToId",
+				allowNull: false,
+			},
+		});
+
+		User.hasMany(models.Notification, {
+			as: "FromId",
+			foreignKey: {
+				name: "requestFromId",
+				allowNull: false,
+			},
+			onDelete: "RESTRICT",
+			onUpdate: "RESTRICT",
+		});
+
+		User.hasMany(models.Notification, {
+			as: "ToId",
+			foreignKey: {
+				name: "requestToId",
 				allowNull: false,
 			},
 			onDelete: "RESTRICT",

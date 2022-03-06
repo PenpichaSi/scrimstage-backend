@@ -1,24 +1,20 @@
-'use strict';
+"use strict";
 
 module.exports = {
-  async up (queryInterface, Sequelize) {
-    /**
-     * Add seed commands here.
-     *
-     * Example:
-     * await queryInterface.bulkInsert('People', [{
-     *   name: 'John Doe',
-     *   isBetaMember: false
-     * }], {});
-    */
-  },
+	async up(queryInterface, Sequelize) {
+		return queryInterface.bulkInsert("teams", [
+			{
+				id: 1,
+				title: "High Elo Entry",
+				tag: "HEE",
+				created_at: new Date(),
+				updated_at: new Date(),
+				team_owner_id: 1,
+			},
+		]);
+	},
 
-  async down (queryInterface, Sequelize) {
-    /**
-     * Add commands to revert seed here.
-     *
-     * Example:
-     * await queryInterface.bulkDelete('People', null, {});
-     */
-  }
+	async down(queryInterface, Sequelize) {
+		return await queryInterface.bulkDelete("teams", null, {});
+	},
 };
