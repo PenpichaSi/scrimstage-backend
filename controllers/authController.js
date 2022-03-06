@@ -34,6 +34,7 @@ exports.register = async (req, res, next) => {
 			username: username,
 			birthDate: birthDate,
 			email: email,
+			gender: gender,
 			password: hashedPassword,
 		});
 		res.status(201).json({ message: "user is created" });
@@ -44,11 +45,11 @@ exports.register = async (req, res, next) => {
 
 exports.login = async (req, res, next) => {
 	try {
-		const { email, password } = req.body;
-		const isEmail = emailFormat.test(email);
+		const { emailInput, password } = req.body;
+		const isEmail = emailFormat.test(emailInput);
 		let user;
 		if (isEmail) {
-			user = await User.findOne({ where: { email: email } });
+			user = await User.findOne({ where: { email: emailInput } });
 		}
 
 		if (!user) {
@@ -69,14 +70,14 @@ exports.login = async (req, res, next) => {
 			expiresIn: 60 * 60 * 24 * 30,
 		});
 
-		const { id, username, userProfileImg, email } = user;
+		const { id, username, img_url, email } = user;
 
 		res.status(200).json({
 			token,
 			user: {
 				id,
 				username,
-				userProfileImg,
+				img_url,
 				email,
 			},
 		});

@@ -23,6 +23,7 @@
 		"passport": "^0.5.2",
 		"passport-jwt": "^4.0.0",
 		"sequelize": "^6.17.0",
-		"unofficial-valorant-api": "^1.0.4"
+		"unofficial-valorant-api": "^1.0.4",
+		"util": "^0.12.4"
 	}
 }

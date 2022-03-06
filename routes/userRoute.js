@@ -8,11 +8,11 @@ const router = express.Router();
 
 router.get("/me", authenticate, userController.getMe);
 router.post("/register", authController.register);
-router.post("login", authController.login);
+router.post("/login", authController.login);
 router.patch(
-	"/user-profile-image",
+	"/profile",
 	authenticate,
-	upload.single("userProfileImg"),
+	upload.single("img_url"),
 	userController.updateUserProfileImg
 );
 

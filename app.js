@@ -1,3 +1,6 @@
+require("dotenv").config();
+require("./config/passport");
+
 const express = require("express");
 const app = express();
 const cors = require("cors");
@@ -10,14 +13,14 @@ const findTeamRoute = require("./routes/findTeamRoute");
 
 app.use(cors());
 app.use(express.json());
-app.use(express.urlencoded({ extends: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use("static", express.static("public/images"));
 
 app.use("/users", userRoute);
-app.use("/friends", friendRoute);
-app.use("/find-scrim", findScrimRoute);
-app.use("find-player", findPlayerRoute);
-app.use("/find-team", findTeamRoute);
+// app.use("/friends", friendRoute);
+// app.use("/find-scrim", findScrimRoute);
+// app.use("find-player", findPlayerRoute);
+// app.use("/find-team", findTeamRoute);
 
 app.use((req, res) => {
 	res.status(404).json({ message: "Invalid API Endpoint" });
