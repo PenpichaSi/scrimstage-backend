@@ -29,3 +29,17 @@ exports.updateUserProfileImg = (req, res, next) => {
 		res.json({ message: "up loaded profile picture successfully" });
 	});
 };
+
+exports.getProfileById = async (req, res, next) => {
+	const id = req.params.userId;
+	try {
+		const user = await User.findOne({
+			where: { id },
+			attributes: { exclude: ["password", "email", "gender", "birth_date"] },
+		});
+
+		res.status(200).json({ user });
+	} catch (err) {
+		next(err);
+	}
+};

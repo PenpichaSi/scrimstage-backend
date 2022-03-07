@@ -15,5 +15,6 @@ router.patch(
 	upload.single("img_url"),
 	userController.updateUserProfileImg
 );
+router.get("/getProfile/:userId", authenticate, userController.getProfileById);
 
 module.exports = router;
