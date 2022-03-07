@@ -1,6 +1,21 @@
 const { User, Team, Notification } = require("../models");
 const { Op } = require("sequelize");
 
+exports.getAllNotification = async (req, res, next) => {
+	const id = req.user.id;
+	try {
+		const allNotification = await Notification.findAll({
+			where: {
+				[Op.and]: [{ requestToId: id }, { status: "PENDING" }],
+			},
+		});
+
+		res.status(200).json({ allNotification });
+	} catch (err) {
+		next(err);
+	}
+};
+
 exports.invitePlayerRequest = async (req, res, next) => {
 	const { userId } = req.params;
 	try {
