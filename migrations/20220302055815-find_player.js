@@ -9,6 +9,26 @@ module.exports = {
 				primaryKey: true,
 				autoIncrement: true,
 			},
+			user_id: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: {
+						tableName: "users",
+					},
+					key: "id",
+				},
+			},
+			team_id: {
+				type: Sequelize.INTEGER,
+				allowNull: false,
+				references: {
+					model: {
+						tableName: "teams",
+					},
+					key: "id",
+				},
+			},
 			rank: {
 				type: Sequelize.INTEGER,
 				allowNull: false,
@@ -21,16 +41,7 @@ module.exports = {
 				type: Sequelize.BOOLEAN,
 				defaultValue: false,
 			},
-			user_id: {
-				type: Sequelize.INTEGER,
-				allowNull: false,
-				references: {
-					model: {
-						tableName: "users",
-					},
-					key: "id",
-				},
-			},
+
 			created_at: {
 				type: Sequelize.DATE,
 				allowNull: false,

@@ -1,4 +1,4 @@
-const { User, Team, Notification } = require("../models");
+const { User, Team, Notification, FindTeam, FindPlayer } = require("../models");
 const { Op } = require("sequelize");
 
 exports.getAllNotification = async (req, res, next) => {
@@ -45,19 +45,19 @@ exports.invitePlayerRequest = async (req, res, next) => {
 };
 
 exports.acceptInviteRequest = async (req, res, next) => {
-	const notificationId = req.params.notificationId;
+	const { notificationId, findPlayerId } = req.params;
 	try {
 		const notification = await Notification.findOne({
 			where: { id: notificationId },
 			include: [
 				{
 					model: User,
-					attributes: { exclude: ["password", "email"] },
+					attributes: { exclude: ["password", "email", "birthDate", "gender"] },
 					as: "FromId",
 				},
 				{
 					model: User,
-					attributes: { exclude: ["password", "email"] },
+					attributes: { exclude: ["password", "email", "birthDate", "gender"] },
 					as: "ToId",
 				},
 			],
@@ -68,6 +68,8 @@ exports.acceptInviteRequest = async (req, res, next) => {
 				message: "must leave the current team before joining the new One",
 			});
 		}
+
+		await FindPlayer.update({ status: true }, { where: { id: findPlayerId } });
 
 		await Notification.update(
 			{ status: "ACCEPTED" },
@@ -124,7 +126,8 @@ exports.joiningTeamRequest = async (req, res, next) => {
 };
 
 exports.acceptJoiningTeamRequest = async (req, res, next) => {
-	const notificationId = req.params.notificationId;
+	const { notificationId, findTeamId } = req.params;
+
 	try {
 		const notification = await Notification.findOne({
 			where: { id: notificationId },
@@ -147,6 +150,8 @@ exports.acceptJoiningTeamRequest = async (req, res, next) => {
 				message: "this user already has a team, cannot accept request",
 			});
 		}
+
+		await FindTeam.update({ status: true }, { where: { id: findTeamId } });
 
 		await Notification.update(
 			{ status: "ACCEPTED" },
