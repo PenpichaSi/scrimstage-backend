@@ -8,6 +8,9 @@ const cors = require("cors");
 const userRoute = require("./routes/userRoute");
 const teamRoute = require("./routes/teamRoute");
 const notificationRoute = require("./routes/notificationRoute");
+const findTeamRoute = require("./routes/findTeamRoute");
+const findPlayerRoute = require("./routes/findPlayerRoute");
+const gameAccountRoute = require("./routes/gameAccountRoute");
 const { authenticate } = require("passport");
 
 app.use(cors());
@@ -18,9 +21,10 @@ app.use("static", express.static("public/images"));
 app.use("/users", userRoute);
 app.use("/team", teamRoute);
 app.use("/notification", notificationRoute);
+app.use("/riot", gameAccountRoute);
 // app.use("/find-scrim", findScrimRoute);
-// app.use("find-player", findPlayerRoute);
-// app.use("/find-team", findTeamRoute);
+app.use("/find-player", findPlayerRoute);
+app.use("/find-team", findTeamRoute);
 
 app.use((req, res) => {
 	res.status(404).json({ message: "Invalid API Endpoint" });

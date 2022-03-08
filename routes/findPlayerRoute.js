@@ -4,8 +4,8 @@ const authenticate = require("../middlewares/authenticator");
 
 const router = express.Router();
 
-router.get("/getAll", authenticate, findPlayerController.getAllPost);
+router.get("/getAll", authenticate, findPlayerController.getAll);
 router.post("/create", authenticate, findPlayerController.createPost);
-router.delete("/delete/:postId", authenticate, findTeamController.deletePost);
+router.delete("/delete/:postId", authenticate, findPlayerController.deletePost);
 
 module.exports = router;

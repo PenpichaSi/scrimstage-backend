@@ -66,7 +66,7 @@ module.exports = (sequelize, DataTypes) => {
 
 		User.hasOne(models.GameAccount, {
 			foreignKey: {
-				name: "GameAccountId",
+				name: "userId",
 				allowNull: true,
 			},
 			onDelete: "RESTRICT",

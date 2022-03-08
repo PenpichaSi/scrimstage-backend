@@ -16,12 +16,40 @@ module.exports = (sequelize, DataTypes) => {
 					notEmpty: true,
 				},
 			},
-			uuid: {
+			puuid: {
 				type: DataTypes.STRING,
 				allowNull: false,
 				validate: {
 					notEmpty: true,
 				},
+			},
+			rank: {
+				type: DataTypes.STRING,
+				allowNull: true,
+			},
+			region: {
+				type: DataTypes.STRING,
+				defaultValue: "ap",
+			},
+			winRate: {
+				type: DataTypes.FLOAT,
+				allowNull: true,
+			},
+			avgBodyshot: {
+				type: DataTypes.FLOAT,
+				allowNull: true,
+			},
+			avgKda: {
+				type: DataTypes.FLOAT,
+				allowNull: true,
+			},
+			avgScore: {
+				type: DataTypes.FLOAT,
+				allowNull: true,
+			},
+			avgHeadshot: {
+				type: DataTypes.FLOAT,
+				allowNull: true,
 			},
 		},
 		{
@@ -33,7 +61,7 @@ module.exports = (sequelize, DataTypes) => {
 	GameAccount.associate = (models) => {
 		GameAccount.belongsTo(models.User, {
 			foreignKey: {
-				name: "GameAccountId",
+				name: "userId",
 				allowNull: true,
 			},
 			onDelete: "RESTRICT",

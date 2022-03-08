@@ -41,15 +41,23 @@ module.exports = {
 			},
 			win_rate: {
 				type: Sequelize.FLOAT,
+				allowNull: true,
 			},
-			avg_combat_score: {
+			avg_score: {
 				type: Sequelize.FLOAT,
+				allowNull: true,
 			},
-			avg_kda: {
+			avg_Kda: {
 				type: Sequelize.FLOAT,
+				allowNull: true,
 			},
-			avg_econ_score: {
+			avg_bodyshot: {
 				type: Sequelize.FLOAT,
+				allowNull: true,
+			},
+			avg_headshot: {
+				type: Sequelize.FLOAT,
+				allowNull: true,
 			},
 			created_at: {
 				type: Sequelize.DATE,
