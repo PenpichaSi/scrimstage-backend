@@ -15,6 +15,6 @@ module.exports = {
 	},
 
 	async down(queryInterface, Sequelize) {
-		return queryInterface.removeColumn("user", "teamId", {});
+		return queryInterface.removeColumn("users", "teamId", {});
 	},
 };

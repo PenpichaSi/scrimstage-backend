@@ -2,6 +2,19 @@ const ValorantAPI = require("unofficial-valorant-api");
 const { GameAccount, User } = require("../models");
 const { mapList } = require("../Services/GameAccountSerializer");
 
+const getAllData = async (req, res, next) => {
+	const id = req.user.id;
+	try {
+		const valorantStat = await GameAccount.findOne({ where: { userId: id } });
+		if (!valorantStat) {
+			return res.status(200).json({ valorantStat: null });
+		}
+		res.status(200).json({ valorantStat });
+	} catch (err) {
+		next(err);
+	}
+};
+
 const initValorantConnection = async (req, res, next) => {
 	const { name, tag } = req.body;
 	try {
@@ -25,19 +38,10 @@ const initValorantConnection = async (req, res, next) => {
 			username: name,
 			tag: tag,
 			puuid: resAccount.data.puuid,
-			rank: resRank.data[0].currenttierpatched.toUpperCase(),
+			rank: resRank.data[0].currenttierpatched.split(" ")[0].toUpperCase(),
 			region: "ap",
 		});
 		await fetchStats(req.user.id, "ap", resAccount.data.puuid);
-		// await GameAccount.update(
-		// 	{
-		// 		win_rate: overAllStats.win_rate,
-		// 	},
-		// 	{
-		// 		where: { userId: req.user.id },
-		// 	}
-		// );
-		// console.log(overAllStats);
 
 		res.status(200).json({ message: "done" });
 	} catch (err) {
@@ -50,7 +54,7 @@ const updateStats = async (req, res, next) => {
 	try {
 		const account = await GameAccount.findOne({ where: { userId: userId } });
 		await fetchStats(userId, account.region, account.puuid);
-		res.status(200).json({ message: "update successfully" });
+		res.status(200).json({ account });
 	} catch (err) {
 		next(err);
 	}
@@ -153,4 +157,9 @@ const fetchStats = async (userId, region, puuid) => {
 	return response;
 };
 
-module.exports = { fetchStats, initValorantConnection, updateStats };
+module.exports = {
+	fetchStats,
+	initValorantConnection,
+	updateStats,
+	getAllData,
+};

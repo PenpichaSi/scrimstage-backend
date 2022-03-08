@@ -3,9 +3,9 @@ const cloudinary = require("cloudinary").v2;
 const { User } = require("../models");
 
 exports.getMe = (req, res, next) => {
-	const { id, username, img_url } = req.body;
+	const { id, username, imgUrl, createdAt } = req.user;
 
-	res.status(200).json({ user: { id, username, img_url } });
+	res.status(200).json({ user: { id, username, imgUrl, createdAt } });
 };
 
 exports.updateUserProfileImg = (req, res, next) => {

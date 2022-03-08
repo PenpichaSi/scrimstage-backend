@@ -3,6 +3,8 @@ const authenticate = require("../middlewares/authenticator");
 const gameAccountController = require("../controllers/gameAccountController");
 
 const router = express.Router();
+
+router.get("/", authenticate, gameAccountController.getAllData);
 router.post(
 	"/connect",
 	authenticate,
