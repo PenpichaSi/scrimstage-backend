@@ -5,11 +5,20 @@ const { mapList } = require("../Services/GameAccountSerializer");
 const getAllData = async (req, res, next) => {
 	const id = req.user.id;
 	try {
-		const valorantStat = await GameAccount.findOne({ where: { userId: id } });
+		const valorantStat = await GameAccount.findOne({
+			where: { userId: id },
+			include: [
+				{
+					model: User,
+					attributes: { exclude: ["password", "email", "birthDate", "gender"] },
+				},
+			],
+		});
 		if (!valorantStat) {
 			return res.status(200).json({ valorantStat: null });
 		}
 		res.status(200).json({ valorantStat });
+		console.log(valorantStat);
 	} catch (err) {
 		next(err);
 	}
@@ -33,7 +42,7 @@ const initValorantConnection = async (req, res, next) => {
 			"ap",
 			resAccount.data.puuid
 		);
-		await GameAccount.create({
+		const account = await GameAccount.create({
 			userId: req.user.id,
 			username: name,
 			tag: tag,
@@ -41,9 +50,14 @@ const initValorantConnection = async (req, res, next) => {
 			rank: resRank.data[0].currenttierpatched.split(" ")[0].toUpperCase(),
 			region: "ap",
 		});
-		await fetchStats(req.user.id, "ap", resAccount.data.puuid);
+		const stats = await fetchStats(req.user.id, "ap", resAccount.data.puuid);
 
-		res.status(200).json({ message: "done" });
+		const userStats = {
+			...account,
+			...stats,
+		};
+
+		res.status(200).json({ userStats });
 	} catch (err) {
 		next(err);
 	}
@@ -135,26 +149,16 @@ const fetchStats = async (userId, region, puuid) => {
 	const win_rate = wonGame / totalGame;
 	const avg_score = totalScores / totalGame;
 
-	const response = {
-		avg_kda,
-		avg_headshot,
-		avg_bodyshot,
-		win_rate,
-		avg_score,
+	const statsObj = {
+		winRate: win_rate,
+		avgScore: avg_score,
+		avgHeadshot: avg_headshot,
+		avgBodyshot: avg_bodyshot,
+		avgKda: avg_kda,
 	};
+	await GameAccount.update(statsObj, { where: { userId: userId } });
 
-	await GameAccount.update(
-		{
-			winRate: win_rate,
-			avgScore: avg_score,
-			avgHeadshot: avg_headshot,
-			avgBodyshot: avg_bodyshot,
-			avgKda: avg_kda,
-		},
-		{ where: { userId: userId } }
-	);
-
-	return response;
+	return statsObj;
 };
 
 module.exports = {

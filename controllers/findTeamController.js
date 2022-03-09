@@ -1,10 +1,24 @@
-const { User, FindTeam } = require("../models");
+const { User, FindTeam, GameAccount, Team } = require("../models");
 
 exports.getAllPost = async (req, res, next) => {
 	try {
-		const allPost = await FindTeam.findAll({ where: { status: false } });
+		const allPost = await FindTeam.findAll({
+			where: { status: false },
+			include: [
+				{
+					model: User,
+					attributes: { exclude: ["password", "email", "birthDate", "gender"] },
+					include: [
+						{
+							model: GameAccount,
+						},
+					],
+				},
+			],
+		});
 		res.status(200).json({ allPost });
 	} catch (err) {
+		console.log(err);
 		next(err);
 	}
 };

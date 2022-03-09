@@ -1,6 +1,6 @@
 const express = require("express");
-const findTeamController = require("../controllers/FindTeamController");
 const authenticate = require("../middlewares/authenticator");
+const findTeamController = require("../controllers/findTeamController");
 
 const router = express.Router();
 

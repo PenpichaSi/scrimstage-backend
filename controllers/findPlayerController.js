@@ -1,8 +1,28 @@
-const { User, Notification, FindPlayer } = require("../models");
+const {
+	User,
+	Notification,
+	FindPlayer,
+	GameAccount,
+	Team,
+} = require("../models");
 
 exports.getAll = async (req, res, next) => {
 	try {
-		const allPost = await FindPlayer.findAll({ where: { status: false } });
+		const allPost = await FindPlayer.findAll({
+			where: { status: false },
+			include: [
+				{
+					model: User,
+					attributes: { exclude: ["password", "email", "birthDate", "gender"] },
+					include: [
+						{
+							model: GameAccount,
+							model: Team,
+						},
+					],
+				},
+			],
+		});
 		res.status(200).json({ allPost });
 	} catch (err) {
 		next(err);

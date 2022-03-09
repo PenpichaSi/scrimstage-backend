@@ -69,8 +69,7 @@ exports.login = async (req, res, next) => {
 		const token = jwt.sign(payload, process.env.JWT_SECRET_KEY, {
 			expiresIn: 60 * 60 * 24 * 30,
 		});
-		console.log(user);
-		const { id, username, imgUrl, email, createdAt } = user;
+		const { id, username, imgUrl, email, createdAt, teamId } = user;
 
 		res.status(200).json({
 			token,
@@ -80,6 +79,7 @@ exports.login = async (req, res, next) => {
 				imgUrl,
 				email,
 				createdAt,
+				teamId,
 			},
 		});
 	} catch (err) {
