@@ -22,7 +22,7 @@ router.patch(
 );
 router.patch("/edit/username", authenticate, userController.editUsername);
 router.patch("/edit/email", authenticate, userController.editEmail);
-router.patch("eoit/password", authenticate, userController.editPassword);
+router.patch("edit/password", authenticate, userController.editPassword);
 router.get("/getProfile/:userId", authenticate, userController.getProfileById);
 
 module.exports = router;
