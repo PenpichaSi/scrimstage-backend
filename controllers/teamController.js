@@ -21,7 +21,13 @@ exports.getTeamProfileById = async (req, res, next) => {
 	const id = req.params.teamId;
 	try {
 		const team = await Team.findOne({ where: { id } });
-		res.status(200).json(team);
+		const teamMembers = await User.findAll({
+			where: { teamId: id },
+			attributes: {
+				exclude: ["password", "email", "gender", "birthDate"],
+			},
+		});
+		res.status(200).json({ teamData: { team, teamMembers } });
 	} catch (err) {
 		next(err);
 	}

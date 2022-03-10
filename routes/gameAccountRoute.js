@@ -5,6 +5,7 @@ const gameAccountController = require("../controllers/gameAccountController");
 const router = express.Router();
 
 router.get("/", authenticate, gameAccountController.getAllData);
+router.get("/:userId", authenticate, gameAccountController.getUserProfilebyId);
 router.post(
 	"/connect",
 	authenticate,

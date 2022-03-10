@@ -9,6 +9,29 @@ exports.getAllNotification = async (req, res, next) => {
 				[Op.and]: [{ requestToId: id }, { status: "PENDING" }],
 			},
 		});
+		if (req.user.teamId === null) {
+			for (let i = 0; i < allNotification.length; i++) {
+				const post = await FindTeam.findOne({
+					where: { userId: allNotification[i].requestToId },
+				});
+				// console.log(post);
+				const include = Object.assign(allNotification[i], post);
+				console.log(allNotification[i]);
+				allNotification.splice(i, 1, include);
+			}
+		} else {
+			for (let i = 0; i < allNotification.length; i++) {
+				const post = await FindTeam.findOne({
+					where: { userId: allNotification[i].requestFromId },
+					raw: true,
+					nest: true,
+				});
+				console.log(allNotification[i]);
+				const include = Object.assign({ ...allNotification[i], ...post });
+				console.log(include);
+				allNotification.splice(i, 1, include);
+			}
+		}
 
 		res.status(200).json({ allNotification });
 	} catch (err) {
