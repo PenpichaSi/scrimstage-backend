@@ -18,6 +18,7 @@ exports.getAllNotification = async (req, res, next) => {
 
 exports.invitePlayerRequest = async (req, res, next) => {
 	const { userId } = req.params;
+	console.log(userId);
 	try {
 		const invitedUser = await User.findOne({ where: { id: userId } });
 		if (invitedUser.teamId) {

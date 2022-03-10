@@ -12,7 +12,16 @@ exports.getTeam = async (req, res, next) => {
 				exclude: ["password", "email", "gender", "birthDate"],
 			},
 		});
-		res.status(200).json({ team, teamMembers });
+		res.status(200).json({ teamData: { team, teamMembers } });
+	} catch (err) {
+		next(err);
+	}
+};
+exports.getTeamProfileById = async (req, res, next) => {
+	const id = req.params.teamId;
+	try {
+		const team = await Team.findOne({ where: { id } });
+		res.status(200).json(team);
 	} catch (err) {
 		next(err);
 	}

@@ -2,10 +2,20 @@ const fs = require("fs");
 const cloudinary = require("cloudinary").v2;
 const { User } = require("../models");
 
-exports.getMe = (req, res, next) => {
+exports.getMe = async (req, res, next) => {
 	const { id, username, imgUrl, createdAt } = req.user;
 
 	res.status(200).json({ user: { id, username, imgUrl, createdAt } });
+};
+
+exports.getUserProfileById = async (req, res, next) => {
+	const id = req.params.userId;
+	try {
+		const user = await User.findOne({ where: { id } });
+		res.status(200).json({ user });
+	} catch (err) {
+		next(err);
+	}
 };
 
 exports.updateUserProfileImg = (req, res, next) => {

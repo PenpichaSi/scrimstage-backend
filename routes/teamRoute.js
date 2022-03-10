@@ -6,6 +6,11 @@ const upload = require("../middlewares/upload");
 const router = express.Router();
 
 router.get("/getTeam", authenticate, teamController.getTeam);
+router.get(
+	"/getTeamProfile/teamId",
+	authenticate,
+	teamController.getTeamProfileById
+);
 router.post("/create", authenticate, teamController.createTeam);
 router.patch(
 	"/uploadTeamimage",
