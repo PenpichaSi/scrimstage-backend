@@ -27,20 +27,21 @@ const getAllData = async (req, res, next) => {
 const getUserProfilebyId = async (req, res, next) => {
 	const id = req.params.userId;
 	try {
-		const valorantStat = await GameAccount.findOne({
-			where: { userId: id },
-			include: [
-				{
-					model: User,
-					attributes: { exclude: ["password", "email", "birthDate", "gender"] },
-				},
-			],
+		const valorantStat = await User.findOne({
+			where: { id: id },
+			attributes: { exclude: ["password", "email", "birthDate", "gender"] },
+			// include: [
+			// 	{
+			// 		model: User,
+			// 		attributes: { exclude: ["password", "email", "birthDate", "gender"] },
+			// 	},
+			// ],
 		});
+
 		if (!valorantStat) {
 			return res.status(200).json({ valorantStat: null });
 		}
 		res.status(200).json({ valorantStat });
-		console.log(valorantStat);
 	} catch (err) {
 		next(err);
 	}

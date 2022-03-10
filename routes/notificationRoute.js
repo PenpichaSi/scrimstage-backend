@@ -13,7 +13,7 @@ router.post(
 	notificationController.invitePlayerRequest
 );
 router.patch(
-	"/accept/byTeam/:notificationId/:findTeamId",
+	"/accept/byPlayer/:notificationId/:findPlayerId",
 	authenticate,
 	notificationController.acceptInviteRequest
 );
@@ -30,7 +30,7 @@ router.post(
 	notificationController.joiningTeamRequest
 );
 router.patch(
-	"/accept/byPlayer/:notificationId/:findPlayerId",
+	"/accept/byTeam/:notificationId/:findTeamId",
 	authenticate,
 	notificationController.acceptJoiningTeamRequest
 );

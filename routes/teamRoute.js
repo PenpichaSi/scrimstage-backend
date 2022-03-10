@@ -7,7 +7,7 @@ const router = express.Router();
 
 router.get("/getTeam", authenticate, teamController.getTeam);
 router.get(
-	"/getTeamProfile/teamId",
+	"/getTeamProfile/:teamId",
 	authenticate,
 	teamController.getTeamProfileById
 );

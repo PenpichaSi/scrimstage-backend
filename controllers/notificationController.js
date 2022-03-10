@@ -9,26 +9,25 @@ exports.getAllNotification = async (req, res, next) => {
 				[Op.and]: [{ requestToId: id }, { status: "PENDING" }],
 			},
 		});
-		if (req.user.teamId === null) {
+		if (req.user.teamId) {
 			for (let i = 0; i < allNotification.length; i++) {
 				const post = await FindTeam.findOne({
-					where: { userId: allNotification[i].requestToId },
+					where: { userId: allNotification[i].requestFromId },
 				});
-				// console.log(post);
-				const include = Object.assign(allNotification[i], post);
-				console.log(allNotification[i]);
+				const include = {notification: allNotification[i].dataValues,...post.dataValues};
+				// console.log(allNotification[i]);
 				allNotification.splice(i, 1, include);
 			}
 		} else {
 			for (let i = 0; i < allNotification.length; i++) {
 				const post = await FindTeam.findOne({
-					where: { userId: allNotification[i].requestFromId },
+					where: { userId: allNotification[i].requestToId },
 					raw: true,
 					nest: true,
+					
 				});
-				console.log(allNotification[i]);
-				const include = Object.assign({ ...allNotification[i], ...post });
-				console.log(include);
+				const include = {notification: allNotification[i],...post};
+				// console.log(include);
 				allNotification.splice(i, 1, include);
 			}
 		}
@@ -48,7 +47,7 @@ exports.invitePlayerRequest = async (req, res, next) => {
 			res.status(400).json({ message: "this user already has a team" });
 		}
 		const existedRequest = await Notification.findOne({
-			where: { requestToId: userId },
+			where: { requestToId: userId, status: "PENDING" },
 		});
 		if (existedRequest)
 			return res

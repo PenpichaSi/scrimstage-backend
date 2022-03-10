@@ -5,9 +5,9 @@ const { User } = require("../models");
 const emailFormat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
 
 exports.getMe = async (req, res, next) => {
-	const { id, username, imgUrl, createdAt } = req.user;
+	const { id, username, imgUrl, createdAt, teamId } = req.user;
 
-	res.status(200).json({ user: { id, username, imgUrl, createdAt } });
+	res.status(200).json({ user: { id, username, imgUrl, createdAt,teamId } });
 };
 
 exports.getUserProfileById = async (req, res, next) => {
